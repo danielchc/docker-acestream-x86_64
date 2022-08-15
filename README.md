@@ -9,7 +9,7 @@ docker build -t acestream .
 ## How to run
 To run with default config
 ```
-docker run -it --rm -p8621:8621 -p6878:6878  acestream-arm
+docker run -it --rm -p8621:8621 -p6878:6878  acestream
 ```
 If you want a custom configuration
 ```
