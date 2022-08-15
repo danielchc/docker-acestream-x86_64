@@ -8,9 +8,7 @@ ADD acestream.conf  /opt/acestream
 
 RUN wget -P /opt/acestream https://download.acestream.media/linux/acestream_3.1.49_ubuntu_18.04_x86_64.tar.gz
 
-RUN tar xvf acestream_3.1.49_ubuntu_18.04_x86_64.tar.gz 
-
-RUN rm acestream_3.1.49_ubuntu_18.04_x86_64.tar.gz 
+RUN cd /opt/acestream && tar xvf acestream_3.1.49_ubuntu_18.04_x86_64.tar.gz && rm acestream_3.1.49_ubuntu_18.04_x86_64.tar.gz 
 
 RUN chmod +x /opt/acestream/start-engine
 
