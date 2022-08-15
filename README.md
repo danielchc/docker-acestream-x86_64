@@ -7,13 +7,8 @@ docker build -t acestream .
 ```
 
 ## How to run
-To run with default config
 ```
-docker run -it --rm -p8621:8621 -p6878:6878  acestream
-```
-If you want a custom configuration
-```
-docker run -it --rm -v $(pwd)/acestream.conf:/opt/acestream/acestream.conf -p8621:8621 -p6878:6878  acestream
+docker run -it --rm -v $(pwd)/acestream.conf:/opt/acestream/acestream.conf -p8621:8621 -p6878:6878 acestream
 ```
 
 ## Check if works
