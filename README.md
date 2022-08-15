@@ -8,7 +8,7 @@ docker build -t acestream .
 
 ## How to run
 ```
-docker run -it --rm -v $(pwd)/acestream.conf:/opt/acestream/acestream.conf -p8621:8621 -p6878:6878 acestream
+docker run -it --rm --tmpfs "/dev/disk/by-id:noexec,rw,size=4k" -v $(pwd)/acestream.conf:/opt/acestream/acestream.conf -p8621:8621 -p6878:6878 acestream
 ```
 
 ## Check if works
