@@ -1,5 +1,6 @@
 services:
   acestream:
+    tmpfs: /dev/disk/by-id:noexec,rw,size=4k
     build: .
     container_name: acestream
     restart: unless-stopped
