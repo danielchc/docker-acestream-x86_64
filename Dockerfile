@@ -1,20 +1,41 @@
-FROM ubuntu:18.04
+# Set the base image.
+FROM ubuntu:22.04
 
-RUN apt update -y && apt upgrade -y && apt -y install libpython2.7 python-pkg-resources libsqlite3-dev python-apsw wget
+# Define arguments for the Acestream version and its SHA256 hash.
+ARG ACESTREAM_FILE=acestream_3.2.3_ubuntu_22.04_x86_64_py3.10.tar.gz
 
-RUN mkdir -p /opt/acestream
+# Copy the requirements.txt file into the build context.
+COPY config/requirements.txt /requirements.txt
 
-ADD acestream.conf  /opt/acestream
+# Install system packages and clean up in a single layer to keep the size to a minimum.
+RUN set -ex && \
+    apt-get update && \
+    apt-get install -yq --no-install-recommends \
+        ca-certificates \
+        python3.10 \
+        python3.10-distutils \
+        net-tools \
+        libpython3.10 \
+        wget \
+        libsqlite3-dev \
+        build-essential \
+        libxml2-dev \
+        libxslt1-dev && \
+    wget https://bootstrap.pypa.io/get-pip.py && \
+    python3.10 get-pip.py && \
+    pip install --no-cache-dir -r /requirements.txt && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/* /var/tmp/* && \
+    rm /requirements.txt get-pip.py
 
-RUN wget -P /opt/acestream https://download.acestream.media/linux/acestream_3.1.49_ubuntu_18.04_x86_64.tar.gz
+# Install Acestream.
+RUN mkdir /opt/acestream
+ADD $ACESTREAM_FILE /opt/acestream
 
-RUN cd /opt/acestream && tar xvf acestream_3.1.49_ubuntu_18.04_x86_64.tar.gz && rm acestream_3.1.49_ubuntu_18.04_x86_64.tar.gz 
+# Copy Acestream configuration.
 
-RUN chmod +x /opt/acestream/start-engine
+COPY config/acestream.conf /opt/acestream/acestream.conf
 
-EXPOSE 8621 6878
+# Entry point for the container.
 
 ENTRYPOINT ["/opt/acestream/start-engine", "@/opt/acestream/acestream.conf"]
-
-	
-	

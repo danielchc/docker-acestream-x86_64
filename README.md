@@ -1,12 +1,20 @@
 # docker-acestream-x86_64
 Docker image to run acestream-engine in x86_64 system
 
-## How to build
+## Docker compose
+
+```
+docker compose up -d
+```
+
+## Build Manually
+
+### How to build
 ```
 docker build -t acestream .
 ```
 
-## How to run
+### How to run
 ```
 docker run -it --rm --tmpfs "/dev/disk/by-id:noexec,rw,size=4k" -v $(pwd)/acestream.conf:/opt/acestream/acestream.conf -p8621:8621 -p6878:6878 acestream
 ```
